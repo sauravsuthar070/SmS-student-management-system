@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Switch replaced with Routes
+import Navbar from './component/Navbar';
+import StudentList from './component/StudentList';
+import StudentForm from './component/StudentForm';
+import PrivateRoute from './component/PrivateRoute'; 
+
 
 function App() {
+  const isAuthenticated = true;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes> 
+        <Route path="/students" element={<StudentList />} />
+        <Route path="/add-student" element={<StudentForm />} />
+        
+      
+        <Route path="/private" element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <StudentList />
+          </PrivateRoute>
+        } />
+        
+
+      </Routes>
+    </Router>
   );
 }
 
